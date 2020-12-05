@@ -1168,20 +1168,13 @@ md"## Part 1"
 
 splinput = split(input, "\n\n")
 
-keys = ["byr:",
-"iyr:",
-"eyr:",
-"hgt:",
-"hcl:",
-"ecl:",
-"pid:",
-"cid:"]
+keys = ["byr:", "iyr:", "eyr:", "hgt:", "hcl:", "ecl:", "pid:", "cid:"]
 
 valid = 0
 for entry in splinput
-	if all(occursin(k, entry) for k in keys[1:7]) #excluding cid:
-		global valid += 1
-	end
+    if all(occursin(k, entry) for k in keys[1:7]) #excluding cid:
+        global valid += 1
+    end
 end
 
 print(valid)
@@ -1190,11 +1183,11 @@ md"Read about variable scope in Julia [here](https://docs.julialang.org/en/v1/ma
 
 md"## Part 2"
 
-valid = 0 
+valid = 0
 
 function qsplit(in_str)
-	a = split(in_str, ':')
-	return a[1] => a[2]
+    a = split(in_str, ':')
+    return a[1] => a[2]
 end
 
 md"### Instructions
@@ -1211,30 +1204,37 @@ cid (Country ID) - ignored, missing or not.
 "
 
 for entry in splinput
-	if all(occursin(k, entry) for k in keys[1:7]) #excluding cid:
-		split_entry = split(entry, ['\n', ' ']) # one entry per key
-		dic = Dict(qsplit(kv_pair) for kv_pair in split_entry) # turn into Dict
-		if 1919 < parse(Int64, dic["byr"]) < 2003
-		if 2009 < parse(Int64, dic["iyr"]) < 2021
-		if 2019 < parse(Int64, dic["eyr"]) < 2031
-		if startswith(dic["hcl"], '#') && length(split(dic["hcl"], '#')[2]) == 6
-		if length(dic["ecl"]) == 3 && occursin(r"amb|blu|brn|gry|grn|hzl|oth", dic["ecl"])
-		if length(dic["pid"]) == 9
-		if occursin(r"cm|in", dic["hgt"])
-		if occursin("cm", dic["hgt"]) && (149 < parse(Int64, split(dic["hgt"], "cm")[1]) < 194)
-			global valid += 1
-		elseif occursin("in", dic["hgt"]) && (58 < parse(Int64, split(dic["hgt"], "in")[1]) < 77)
-			global valid += 1
-		end
-		end
-		end
-		end
-		end
-		end
-		end
-		end
-	end
-	end
+    if all(occursin(k, entry) for k in keys[1:7]) #excluding cid:
+        split_entry = split(entry, ['\n', ' ']) # one entry per key
+        dic = Dict(qsplit(kv_pair) for kv_pair in split_entry) # turn into Dict
+        if 1919 < parse(Int64, dic["byr"]) < 2003
+            if 2009 < parse(Int64, dic["iyr"]) < 2021
+                if 2019 < parse(Int64, dic["eyr"]) < 2031
+                    if startswith(dic["hcl"], '#') && length(split(dic["hcl"], '#')[2]) == 6
+                        if length(dic["ecl"]) == 3 &&
+                           occursin(r"amb|blu|brn|gry|grn|hzl|oth", dic["ecl"])
+                            if length(dic["pid"]) == 9
+                                if occursin(r"cm|in", dic["hgt"])
+                                    if occursin("cm", dic["hgt"]) && (
+                                        149 <
+                                        parse(Int64, split(dic["hgt"], "cm")[1]) <
+                                        194
+                                    )
+                                        global valid += 1
+                                    elseif occursin("in", dic["hgt"]) && (
+                                        58 < parse(Int64, split(dic["hgt"], "in")[1]) < 77
+                                    )
+                                        global valid += 1
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
 
 
 print('\n', valid)
