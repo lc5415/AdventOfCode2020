@@ -212,7 +212,7 @@ threes_and_ones(input)
 using Printf
 
 # %%
-function count_contigs_arrays(c,n)
+function count_contigs_arrays_wrong(c,n)
     # c is the min length of contiguous arrays to search for
     # n is the length of the array to search in 
     count = 0 # <- equivalent to factoring out
@@ -224,7 +224,23 @@ function count_contigs_arrays(c,n)
 end
 
 # %%
-count_contigs_arrays(3, 6)
+count_contigs_arrays_wrong(3, 6)
+
+# %%
+function count_contig_arrays(n)
+    if n == 0
+        return 1
+    elseif n == 1
+        return 1
+    elseif n == 2
+        return 2
+    else 
+        return count_contig_arrays(n-1) + count_contig_arrays(n-2) + count_contig_arrays(n-3)
+    end
+end
+
+# %%
+count_contig_arrays(4)
 
 # %%
 function arrangements(input)
