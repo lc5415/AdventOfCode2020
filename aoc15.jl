@@ -51,9 +51,11 @@ function elf_game_opti(start; end_num = 2020)
         end
         round += 1
     end
-    board, prev
+    prev
 end
 
-elf_game_opti(ex1, end_num = 2020)
+@time @assert elf_game_opti(ex1, end_num = 2020) == 436
 
-@assert elf_game(ex1, end_num = 30000000) == 175594
+@assert elf_game_opti(ex1, end_num = 30000000) == 175594
+
+@show elf_game_opti(input, end_num = 30000000)
